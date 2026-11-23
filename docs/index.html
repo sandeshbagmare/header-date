@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>header-date — HTTP dates parsed strictly, formatted correctly</title>
+<meta name="description" content="Http dates parsed strictly, formatted correctly. Standard library only, Python 3.9+.">
+<meta property="og:title" content="header-date — HTTP dates parsed strictly, formatted correctly">
+<meta property="og:description" content="Http dates parsed strictly, formatted correctly. Standard library only, Python 3.9+.">
+<meta property="og:image" content="https://raw.githubusercontent.com/sandeshbagmare/header-date/main/assets/banner.svg">
+<meta property="og:type" content="website">
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<style>
+  :root {
+    --bg: hsl(186 45% 8%);
+    --ink: #e6edf6;
+    --muted: #9fb0c6;
+    --line: hsl(186 35% 26%);
+    --accent: hsl(216 88% 66%);
+    --soft: hsl(216 92% 80%);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.65 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  a { color: var(--soft); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header {
+    position: sticky; top: 0; z-index: 9; display: flex; gap: 18px; align-items: center;
+    padding: 14px 24px; background: rgba(8, 12, 20, 0.86); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  header .mark { width: 26px; height: 26px; }
+  header strong { font-family: ui-monospace, monospace; letter-spacing: 0.02em; }
+  header nav { margin-left: auto; display: flex; gap: 16px; font-size: 14px; }
+  .hero { max-width: 1180px; margin: 0 auto; padding: 18px 20px 0; }
+  .hero img { width: 100%; border-radius: 14px; box-shadow: 0 18px 50px rgba(0,0,0,0.45); }
+  main { max-width: 900px; margin: 0 auto; padding: 28px 20px 80px; }
+  h1, h2, h3, h4 { line-height: 1.25; }
+  h2 { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--line); }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em;
+    background: rgba(148, 163, 184, 0.15); padding: 1px 5px; border-radius: 5px;
+  }
+  pre.code {
+    position: relative; background: #070b12; border: 1px solid var(--line);
+    border-radius: 12px; padding: 16px; overflow-x: auto;
+  }
+  pre.code code { background: none; padding: 0; font-size: 14px; }
+  pre .lang {
+    position: absolute; top: 8px; right: 12px; font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 15px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; }
+  img { max-width: 100%; }
+  blockquote {
+    margin: 18px 0; padding: 4px 16px; border-left: 3px solid var(--accent);
+    color: var(--muted);
+  }
+  footer {
+    border-top: 1px solid var(--line); padding: 26px 20px; color: var(--muted);
+    font-size: 14px; text-align: center;
+  }
+</style>
+</head>
+<body>
+<header>
+  <img class="mark" src="../assets/logo.svg" alt="">
+  <strong>header-date</strong>
+  <nav>
+    <a href="https://pypi.org/project/header-date/">PyPI</a>
+    <a href="https://github.com/sandeshbagmare/header-date">GitHub</a>
+    <a href="https://github.com/sandeshbagmare/header-date/issues">Issues</a>
+    <a href="https://github.com/sandeshbagmare/header-date/blob/main/CHANGELOG.md">Changelog</a>
+  </nav>
+</header>
+<div class="hero"><img src="../assets/banner.svg" alt="header-date"></div>
+<main>
+<p align="center">
+  <img src="../assets/how.svg" width="720" alt="how header-date fits in">
+</p>
+<h2>Install</h2>
+<pre class="code"><span class="lang">console</span><code>pip install header-date</code></pre>
+<h2>Use</h2>
+<pre class="code"><span class="lang">python</span><code>from header_date import InvalidHTTPDate, format, now, parse, to_timestamp
+
+parse(&quot;Sun, 06 Nov 1994 08:49:37 GMT&quot;)            # aware datetime in UTC
+parse(&quot;Mon, 06 Nov 1994 08:49:37 GMT&quot;, strict=False)  # accept the wrong weekday
+format(moment)                                     # &#x27;Sun, 06 Nov 1994 08:49:37 GMT&#x27;
+now()                                              # the current time, canonical form
+to_timestamp(&quot;Thu, 01 Jan 1970 00:00:00 GMT&quot;)       # 0.0</code></pre>
+<h2>What is accepted</h2>
+<table><thead><tr>
+<th>form</th>
+<th>example</th>
+</tr></thead><tbody>
+<tr><td>IMF-fixdate (RFC 9110)</td><td><code>Sun, 06 Nov 1994 08:49:37 GMT</code></td></tr>
+<tr><td>RFC 850 (obsolete)</td><td><code>Sunday, 06-Nov-94 08:49:37 GMT</code></td></tr>
+<tr><td>asctime (obsolete)</td><td><code>Sun Nov  6 08:49:37 1994</code></td></tr>
+</tbody></table>
+<ul>
+<li>zones <code>GMT</code>, <code>UTC</code> and numeric <code>+0000</code> are accepted; anything else is rejected</li>
+<li>month and weekday names are matched case-insensitively, and full weekday names work</li>
+<li>a two-digit year maps to the most recent past year with those digits (<code>94</code> → 1994,</li>
+</ul>
+<p>  <code>25</code> → 2025), as RFC 9110 asks</p>
+<ul>
+<li>impossible dates (<code>31 Feb</code>, <code>25:00:00</code>) are rejected, not rolled over</li>
+<li><code>format</code> always writes the canonical IMF-fixdate, converting other zones to UTC</li>
+</ul>
+<h2>Limits</h2>
+<ul>
+<li>Only seconds resolution: HTTP dates have no fractional seconds.</li>
+<li>Leap seconds (<code>:60</code>) are rejected.</li>
+<li><code>format</code> does not support years before 1000 or after 9999.</li>
+</ul>
+<h2>Development</h2>
+<pre class="code"><span class="lang">console</span><code>python -m venv .venv
+.venv/bin/pip install -e &quot;.[test]&quot;
+.venv/bin/pytest</code></pre>
+<h2>License</h2>
+<p>MIT.</p>
+</main>
+<footer>
+  header-date · MIT · standard library only ·
+  <a href="https://github.com/sandeshbagmare/header-date">source</a> ·
+  <a href="https://pypi.org/project/header-date/">pip install header-date</a>
+</footer>
+</body>
+</html>

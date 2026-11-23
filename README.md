@@ -1,28 +1,23 @@
-# header-date
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sandeshbagmare/header-date/main/assets/banner.svg" width="100%" alt="header-date: HTTP dates parsed strictly, formatted correctly">
+</p>
 
-Parse and format HTTP dates — and refuse the ones whose weekday is a lie.
+<p align="center">
+  <a href="https://pypi.org/project/header-date/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/header-date.svg"></a>
+  <a href="https://pypi.org/project/header-date/"><img alt="Python versions" src="https://img.shields.io/pypi/pyversions/header-date.svg"></a>
+  <a href="https://pypi.org/project/header-date/"><img alt="Downloads" src="https://img.shields.io/pypi/dm/header-date.svg"></a>
+  <a href="https://github.com/sandeshbagmare/header-date/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/sandeshbagmare/header-date/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/sandeshbagmare/header-date/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/pypi/l/header-date.svg"></a>
+  <a href="https://sandeshbagmare.github.io/header-date/"><img alt="docs" src="https://img.shields.io/badge/docs-online-2ea44f.svg"></a>
+  <a href="https://pypi.org/project/header-date/"><img alt="zero dependencies" src="https://img.shields.io/badge/dependencies-0-2ea44f.svg"></a>
+</p>
 
-[![PyPI](https://img.shields.io/pypi/v/header-date.svg)](https://pypi.org/project/header-date/)
-[![Python](https://img.shields.io/pypi/pyversions/header-date.svg)](https://pypi.org/project/header-date/)
-[![tests](https://github.com/sandeshbagmare/header-date/actions/workflows/ci.yml/badge.svg)](https://github.com/sandeshbagmare/header-date/actions/workflows/ci.yml)
-[![license](https://img.shields.io/pypi/l/header-date.svg)](https://github.com/sandeshbagmare/header-date/blob/main/LICENSE)
+<h3 align="center">HTTP dates parsed strictly, formatted correctly</h3>
+<p align="center"><em>Standard library only. No runtime dependencies. Python 3.9+.</em></p>
 
-```python
->>> from header_date import format, parse
->>> parse("Sun, 06 Nov 1994 08:49:37 GMT").isoformat()
-'1994-11-06T08:49:37+00:00'
->>> format(parse("Sunday, 06-Nov-94 08:49:37 GMT"))
-'Sun, 06 Nov 1994 08:49:37 GMT'
->>> parse("Mon, 06 Nov 1994 08:49:37 GMT")
-Traceback (most recent call last):
-  ...
-header_date.InvalidHTTPDate: weekday says Mon but 1994-11-06 is a Sun
-```
-
-`email.utils.parsedate_to_datetime` parses all three historical formats and quietly
-ignores a weekday that contradicts the date. That is the one field a broken clock or a
-hand-edited header gets wrong, and it is the field a cache validator depends on. This
-library reads the same formats and checks it.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sandeshbagmare/header-date/main/assets/how.svg" width="720" alt="how header-date fits in">
+</p>
 
 ## Install
 
